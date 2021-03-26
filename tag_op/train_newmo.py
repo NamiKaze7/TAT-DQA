@@ -11,7 +11,7 @@ from data_builder.data_util import OPERATOR_CLASSES_
 from tools.utils import create_logger, set_environment
 from data_builder.tatqa_roberta_tagopnet_batch_gen import TaTQABatchGen, TaTQATestBatchGen
 from transformers import RobertaModel, BertModel
-from .tag_op.newmo import MutiHeadModel
+from tag_op.newmo import MutiHeadModel
 import torch
 import numpy as np
 
