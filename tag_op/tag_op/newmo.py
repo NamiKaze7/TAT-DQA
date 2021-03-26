@@ -8,7 +8,7 @@ from .tools import allennlp as util
 from typing import Dict, List, Tuple
 from .file_utils import is_scatter_available
 import numpy as np
-from tag_op.data_builder.data_util import get_op_1, get_op_2, get_op_3, SCALE, OPERATOR_CLASSES_
+from data_builder.data_util import get_op_1, get_op_2, get_op_3, SCALE, OPERATOR_CLASSES_
 import torch.nn.functional as F
 
 
