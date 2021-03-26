@@ -2,11 +2,10 @@ from typing import Dict, Any, Union
 
 import torch
 import torch.nn as nn
-from allennlp.nn.util import replace_masked_values, logsumexp, masked_log_softmax
-from allennlp.modules import FeedForward
-from tag_op.tagop.newmo_util import Single_Output_Layer
+from .tools.allennlp import replace_masked_values, logsumexp, masked_log_softmax
+
 from .head import Head
-from src.modules.utils.decoding_utils import decode_token_spans
+from .tools.decoding_utils import decode_token_spans
 
 
 class SingleSpanHead(Head):
@@ -21,13 +20,13 @@ class SingleSpanHead(Head):
     def forward(self,
                 **kwargs: Dict[str, Any]) -> Dict[str, torch.Tensor]:
 
-        input, mask = self.get_input_and_mask(kwargs)
+        inputseq, mask = self.get_input_and_mask(kwargs)
 
         # Shape: (batch_size, passage_length)
-        start_logits = self._start_output_layer(input).squeeze(-1)
+        start_logits = self._start_output_layer(inputseq).squeeze(-1)
 
         # Shape: (batch_size, passage_length)
-        end_logits = self._end_output_layer(input).squeeze(-1)
+        end_logits = self._end_output_layer(inputseq).squeeze(-1)
 
         start_log_probs = masked_log_softmax(start_logits, mask)
         end_log_probs = masked_log_softmax(end_logits, mask)

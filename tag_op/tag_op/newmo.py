@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from tatqa_metric import TaTQAEmAndF1
 import torch.nn.functional as F
-from .head import head
+from .head import Head
 from .newmo_util import Default_FNN, changelabel
 from .tools import allennlp as util
 from typing import Dict, List, Tuple
