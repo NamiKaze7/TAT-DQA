@@ -29,8 +29,4 @@ class Default_FNN(nn.Module):
         return self.fc2(out)
 
 
-def changelabel(operator_labels: torch.LongTensor, ):
-    for index, label in enumerate(operator_labels):
-        if label > 3:
-            operator_labels[index] = 4
-    return operator_labels
+

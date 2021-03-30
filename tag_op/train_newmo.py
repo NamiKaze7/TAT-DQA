@@ -2,16 +2,16 @@ import os
 import json
 import argparse
 from datetime import datetime
-import options
+from tag_op.tools.model import TagtreeFineTuningModel
 import torch.nn as nn
 from pprint import pprint
-from data_builder.data_util import get_op_1, get_arithmetic_op_index_1, get_op_2, get_arithmetic_op_index_2
-from data_builder.data_util import get_op_3, get_arithmetic_op_index_3
-from data_builder.data_util import OPERATOR_CLASSES_
-from tools.utils import create_logger, set_environment
-from data_builder.tatqa_roberta_tagopnet_batch_gen import TaTQABatchGen, TaTQATestBatchGen
+from tag_op.data_builder.data_util import get_op_1, get_arithmetic_op_index_1, get_op_2, get_arithmetic_op_index_2
+from tag_op.data_builder.data_util import get_op_3, get_arithmetic_op_index_3
+from tag_op.data_builder.data_util import OPERATOR_CLASSES_
+from tag_op.tools.utils import create_logger, set_environment
+from tag_op.data_builder.tatqa_roberta_tagopnet_batch_gen import TaTQABatchGen, TaTQATestBatchGen
 from transformers import RobertaModel, BertModel
-from tag_op.newmo import MutiHeadModel
+from tag_op.tag_op.newmo import MutiHeadModel
 import torch
 import numpy as np
 
@@ -47,7 +47,7 @@ set_environment(args.seed, args.cuda)
 
 
 def main():
-    best_result = float("-inf")
+    # best_result = float("-inf")
     logger.info("Loading data...")
 
     train_itr = TaTQABatchGen(args, data_mode="train", encoder=args.encoder)
@@ -84,37 +84,37 @@ def main():
     else:
         arithmetic_op_index = get_arithmetic_op_index_3(args.op_mode)
 
-    model = MutiHeadModel(bert=bert_model,
-                          config=bert_model.config,
-                          bsz=args.batch_size,
-                          operator_classes=len(operators),
-                          scale_classes=5,
-                          operator_criterion=nn.CrossEntropyLoss(),
-                          scale_criterion=nn.CrossEntropyLoss(),
-                          arithmetic_op_index=arithmetic_op_index,
-                          op_mode=args.op_mode,
-                          ablation_mode=args.ablation_mode, )
+    network = MutiHeadModel(bert=bert_model,
+                            config=bert_model.config,
+                            operator_classes=len(operators),
+                            scale_classes=5,
+                            arithmetic_op_index=arithmetic_op_index,
+                            op_mode=args.op_mode,
+                            ablation_mode=args.ablation_mode, )
 
+    model = TagtreeFineTuningModel(args, network, num_train_steps=num_train_steps)
     train_start = datetime.now()
-
-    model.cuda()
-    model.train()
-    optim = torch.optim.Adam(model.parameters())
     first = True
-    loslis = []
     for epoch in range(1, args.max_epoch + 1):
+        model.reset()
         if not first:
             train_itr.reset()
         first = False
         logger.info('At epoch {}'.format(epoch))
         for step, batch in enumerate(train_itr):
-            loss = model(**batch)['loss']
-            loslis.append(loss.item())
-            loss.backward()
-            optim.step()
-            optim.zero_grad()
-        print(np.mean(loslis))
+            model.update(batch)
+            if model.step % (args.log_per_updates * args.gradient_accumulation_steps) == 0 or model.step == 1:
+                logger.info("Updates[{0:6}] train loss[{1:.5f}] head acc[{1:.5f}]remaining[{2}].\r\n".format(
+                    model.updates, model.train_loss.avg, model.head_acc.avg,
+                    str((datetime.now() - train_start) / (step + 1) * (num_train_steps - step - 1)).split('.')[0]))
+                model.avg_reset()
 
+        model.reset()
+        model.avg_reset()
+        model.evaluate(dev_itr)
+        logger.info("Evaluate epoch:[{0:6}] eval loss[{1:.5f}] head acc[{1:.5f}].\r\n".format(epoch, model.dev_loss.avg,
+                                                                                              model.head_acc.avg))
+        model.avg_reset()
 
 
 if __name__ == "__main__":

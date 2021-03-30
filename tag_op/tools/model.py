@@ -4,7 +4,7 @@ from .optimizer import BertAdam as Adam
 from .utils import AverageMeter
 from tqdm import tqdm
 
-class TagopPredictModel():
+class TagtreePredictModel():
     def __init__(self, args, network):
         self.args = args
         self.train_loss = AverageMeter()
@@ -55,11 +55,12 @@ class TagopPredictModel():
     def get_metrics(self, logger=None):
         return self.mnetwork.get_metrics(logger, True)
 
-class TagopFineTuningModel():
+class TagtreeFineTuningModel():
     def __init__(self, args, network, state_dict=None, num_train_steps=1):
         self.args = args
         self.train_loss = AverageMeter()
         self.dev_loss = AverageMeter()
+        self.head_acc = AverageMeter()
         self.step = 0
         self.updates = 0
         self.network = network
@@ -90,12 +91,15 @@ class TagopFineTuningModel():
     def avg_reset(self):
         self.train_loss.reset()
         self.dev_loss.reset()
+        self.head_acc.reset()
 
     def update(self, tasks):
         self.network.train()
         output_dict = self.mnetwork(**tasks)
         loss = output_dict["loss"]
         self.train_loss.update(loss.item(), 1)
+        acc = output_dict["head_acc"]
+        self.head_acc.update(acc.item(), 1)
         if self.args.gradient_accumulation_steps > 1:
             loss /= self.args.gradient_accumulation_steps
         loss.backward()
@@ -106,14 +110,17 @@ class TagopFineTuningModel():
         self.step += 1
 
     @torch.no_grad()
-    def evaluate(self, dev_data_list, epoch):
+    def evaluate(self, dev_data_list):
         dev_data_list.reset()
         self.network.eval()
-        for batch in dev_data_list:
-            output_dict = self.network(**batch, mode="eval", epoch=epoch)
-            loss = output_dict["loss"]
-            self.dev_loss.update(loss.item(), 1)
-        self.network.train()
+        with torch.no_grad():
+            for batch in dev_data_list:
+                output_dict = self.network(**batch)
+                loss = output_dict["loss"]
+                self.dev_loss.update(loss.item(), 1)
+                acc = output_dict["head_acc"]
+                self.head_acc.update(acc.item(), 1)
+        # self.network.train()
 
     @torch.no_grad()
     def predict(self, test_data_list):

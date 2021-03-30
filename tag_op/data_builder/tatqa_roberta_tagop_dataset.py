@@ -210,12 +210,14 @@ def table_tokenize(table, tokenizer, mapping, answer_type):
     table_cell_number_value = []
     table_mapping = False
     answer_coordinates = None
+    table_span_pos = None
 
     if "table" in mapping and len(mapping["table"]) != 0:
         table_mapping = True
         answer_coordinates = mapping["table"]
 
     current_cell_index = 1
+
     for i in range(len(table)):
         for j in range(len(table[i])):
             cell_ids = string_tokenizer(table[i][j], tokenizer)
@@ -229,6 +231,10 @@ def table_tokenize(table, tokenizer, mapping, answer_type):
             table_cell_tokens.append(table[i][j])
             if table_mapping:
                 if [i, j] in answer_coordinates:
+                    if answer_type == 'span':
+                        start_pos = len(table_tags)
+                        end_pos = start_pos + len(cell_ids) - 1
+                        table_span_pos = [start_pos, end_pos]
                     table_tags += [1 for _ in range(len(cell_ids))]
                 else:
                     table_tags += [0 for _ in range(len(cell_ids))]
@@ -236,7 +242,7 @@ def table_tokenize(table, tokenizer, mapping, answer_type):
                 table_tags += [0 for _ in range(len(cell_ids))]
             table_cell_index += [current_cell_index for _ in range(len(cell_ids))]
             current_cell_index += 1
-    return table_cell_tokens, table_ids, table_tags, table_cell_number_value, table_cell_index
+    return table_cell_tokens, table_ids, table_tags, table_cell_number_value, table_cell_index, table_span_pos
 
 
 def table_test_tokenize(table, tokenizer, mapping, answer_type):
@@ -248,6 +254,7 @@ def table_test_tokenize(table, tokenizer, mapping, answer_type):
     table_cell_number_value = []
     table_mapping = False
     answer_coordinates = None
+    table_span_pos = None
 
     if "table" in mapping and len(mapping["table"]) != 0:
         table_mapping = True
@@ -267,6 +274,10 @@ def table_test_tokenize(table, tokenizer, mapping, answer_type):
             table_cell_tokens.append(table[i][j])
             if table_mapping:
                 if [i, j] in answer_coordinates:
+                    if answer_type == 'span':
+                        start_pos = len(table_tags)
+                        end_pos = start_pos + len(cell_ids) - 1
+                        table_span_pos = [start_pos, end_pos]
                     mapping_content.append(table[i][j])
                     table_tags += [1 for _ in range(len(cell_ids))]
                 else:
@@ -275,7 +286,7 @@ def table_test_tokenize(table, tokenizer, mapping, answer_type):
                 table_tags += [0 for _ in range(len(cell_ids))]
             table_cell_index += [current_cell_index for _ in range(len(cell_ids))]
             current_cell_index += 1
-    return table_cell_tokens, table_ids, table_tags, table_cell_number_value, table_cell_index, mapping_content
+    return table_cell_tokens, table_ids, table_tags, table_cell_number_value, table_cell_index, mapping_content, table_span_pos
 
 
 def paragraph_tokenize(question, paragraphs, tokenizer, mapping, answer_type):
@@ -292,6 +303,7 @@ def paragraph_tokenize(question, paragraphs, tokenizer, mapping, answer_type):
     tags = []
     word_piece_mask = []
     paragraph_index = []
+    paragraph_span_pos = None
 
     paragraph_mapping = False
     paragraph_mapping_orders = []
@@ -307,6 +319,7 @@ def paragraph_tokenize(question, paragraphs, tokenizer, mapping, answer_type):
         if paragraph_mapping and str(order) in paragraph_mapping_orders:
             answer_indexs = mapping["paragraph"][str(order)]
         current_tags = [0 for i in range(len(text))]
+
         if answer_indexs is not None:
             for answer_index in answer_indexs:
                 current_tags[answer_index[0]:answer_index[1]] = \
@@ -353,6 +366,8 @@ def paragraph_tokenize(question, paragraphs, tokenizer, mapping, answer_type):
         print(len(tokens), len(tags))
         input()
     current_token_index = 1
+    is_begin_flag = True
+    begin_pos, end_pos = 0
     for i, token in enumerate(tokens):
         if i != 0:
             sub_tokens = tokenizer._tokenize(" " + token)
@@ -364,6 +379,15 @@ def paragraph_tokenize(question, paragraphs, tokenizer, mapping, answer_type):
             number_value.append(float(number))
         else:
             number_value.append(np.nan)
+        if answer_type == "span" and tags[i] == 1 and is_begin_flag:
+            begin_pos = len(split_tags)
+            end_pos = begin_pos + len(sub_tokens) - 1
+            is_begin_flag = False
+            paragraph_span_pos = [begin_pos, end_pos]
+        elif answer_type == "span" and tags[i] == 1 and not is_begin_flag:
+            end_pos += len(sub_tokens)
+            paragraph_span_pos = [begin_pos, end_pos]
+
         for sub_token in sub_tokens:
             split_tags.append(tags[i])
             split_tokens.append(sub_token)
@@ -373,7 +397,8 @@ def paragraph_tokenize(question, paragraphs, tokenizer, mapping, answer_type):
         if len(sub_tokens) > 1:
             word_piece_mask += [0] * (len(sub_tokens) - 1)
     paragraph_ids = tokenizer.convert_tokens_to_ids(split_tokens)
-    return tokens, paragraph_ids, split_tags, word_piece_mask, number_mask, number_value, paragraph_index
+
+    return tokens, paragraph_ids, split_tags, word_piece_mask, number_mask, number_value, paragraph_index, paragraph_span_pos
 
 
 def paragraph_test_tokenize(question, paragraphs, tokenizer, mapping, answer_type):
@@ -391,7 +416,7 @@ def paragraph_test_tokenize(question, paragraphs, tokenizer, mapping, answer_typ
     tags = []
     word_piece_mask = []
     paragraph_index = []
-
+    paragraph_span_pos = None
     paragraph_mapping = False
     paragraph_mapping_orders = []
     if "paragraph" in list(mapping.keys()) and len(mapping["paragraph"].keys()) != 0:
@@ -451,6 +476,8 @@ def paragraph_test_tokenize(question, paragraphs, tokenizer, mapping, answer_typ
         print(len(tokens), len(tags))
         input()
     current_token_index = 1
+    is_begin_flag = True
+    begin_pos, end_pos = 0
     for i, token in enumerate(tokens):
         if i != 0:
             sub_tokens = tokenizer._tokenize(" " + token)
@@ -462,6 +489,14 @@ def paragraph_test_tokenize(question, paragraphs, tokenizer, mapping, answer_typ
             number_value.append(float(number))
         else:
             number_value.append(np.nan)
+        if answer_type == "span" and tags[i] == 1 and is_begin_flag:
+            begin_pos = len(split_tags)
+            end_pos = begin_pos + len(sub_tokens) - 1
+            is_begin_flag = False
+            paragraph_span_pos = [begin_pos, end_pos]
+        elif answer_type == "span" and tags[i] == 1 and not is_begin_flag:
+            end_pos += len(sub_tokens)
+            paragraph_span_pos = [begin_pos, end_pos]
         for sub_token in sub_tokens:
             split_tags.append(tags[i])
             split_tokens.append(sub_token)
@@ -472,7 +507,7 @@ def paragraph_test_tokenize(question, paragraphs, tokenizer, mapping, answer_typ
             word_piece_mask += [0] * (len(sub_tokens) - 1)
     paragraph_ids = tokenizer.convert_tokens_to_ids(split_tokens)
     return tokens, paragraph_ids, split_tags, word_piece_mask, number_mask, number_value, \
-           paragraph_index, mapping_content
+           paragraph_index, mapping_content, paragraph_span_pos
 
 
 def question_tokenizer(question_text, tokenizer):
@@ -581,11 +616,14 @@ def _concat(question_ids,
             paragraph_tags,
             paragraph_index,
             paragraph_number_value,
+            table_span_pos,
+            paragraph_span_pos,
             sep_start,
             sep_end,
             question_length_limitation,
             passage_length_limitation,
             max_pieces, ):
+    span_pos_label = torch.zeros([1, 2])
     in_table_cell_index = table_cell_index.copy()
     in_paragraph_index = paragraph_index.copy()
     input_ids = torch.zeros([1, max_pieces])
@@ -622,6 +660,25 @@ def _concat(question_ids,
 
     passage_ids = passage_ids + [sep_end]
 
+    if table_span_pos:
+        if table_span_pos[0] >= table_length:
+            span_pos_label[0, :] = torch.from_numpy(np.array([-1, -1]))
+        elif table_span_pos[1] >= table_length:
+            table_span_pos[1] = table_length - 1
+            span_pos_label[0, :] = torch.from_numpy(np.array(table_span_pos) + question_length)
+        else:
+            span_pos_label[0, :] = torch.from_numpy(np.array(table_span_pos) + question_length)
+    elif paragraph_span_pos:
+        if paragraph_span_pos[0] >= (passage_length_limitation - table_length):
+            span_pos_label[0, :] = torch.from_numpy(np.array([-1, -1]))
+        elif paragraph_span_pos[1] >= (passage_length_limitation - table_length):
+            paragraph_span_pos[1] = (passage_length_limitation - table_length) - 1
+            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length)
+        else:
+            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length)
+    else:
+        span_pos_label[0, :] = torch.from_numpy(np.array([-1, -1]))
+
     input_ids[0, :question_length] = torch.from_numpy(np.array(question_ids))
     input_ids[0, question_length:question_length + len(passage_ids)] = torch.from_numpy(np.array(passage_ids))
     attention_mask = input_ids != 0
@@ -637,7 +694,7 @@ def _concat(question_ids,
     del in_table_cell_index
     del in_paragraph_index
     return input_ids, attention_mask, paragraph_mask, paragraph_number_value, paragraph_index, \
-           table_mask, table_cell_number_value, table_index, tags, input_segments
+           table_mask, table_cell_number_value, table_index, tags, input_segments, span_pos_label
 
 
 def _test_concat(question_ids,
@@ -649,6 +706,8 @@ def _test_concat(question_ids,
                  paragraph_tags,
                  paragraph_index,
                  paragraph_number_value,
+                 table_span_pos,
+                 paragraph_span_pos,
                  sep_start,
                  sep_end,
                  question_length_limitation,
@@ -663,6 +722,7 @@ def _test_concat(question_ids,
     table_mask = torch.zeros_like(input_ids)
     table_index = torch.zeros_like(input_ids)
     tags = torch.zeros_like(input_ids)
+    span_pos_label = torch.zeros([1, 2])
 
     if question_length_limitation is not None:
         if len(question_ids) > question_length_limitation:
@@ -690,6 +750,25 @@ def _test_concat(question_ids,
 
     passage_ids = passage_ids + [sep_end]
 
+    if table_span_pos:
+        if table_span_pos[0] >= table_length:
+            span_pos_label[0, :] = torch.from_numpy(np.array([-1, -1]))
+        elif table_span_pos[1] >= table_length:
+            table_span_pos[1] = table_length - 1
+            span_pos_label[0, :] = torch.from_numpy(np.array(table_span_pos) + question_length)
+        else:
+            span_pos_label[0, :] = torch.from_numpy(np.array(table_span_pos) + question_length)
+    elif paragraph_span_pos:
+        if paragraph_span_pos[0] >= (passage_length_limitation - table_length):
+            span_pos_label[0, :] = torch.from_numpy(np.array([-1, -1]))
+        elif paragraph_span_pos[1] >= (passage_length_limitation - table_length):
+            paragraph_span_pos[1] = (passage_length_limitation - table_length) - 1
+            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length)
+        else:
+            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length)
+    else:
+        span_pos_label[0, :] = torch.from_numpy(np.array([-1, -1]))
+
     input_ids[0, :question_length] = torch.from_numpy(np.array(question_ids))
     input_ids[0, question_length:question_length + len(passage_ids)] = torch.from_numpy(np.array(passage_ids))
     attention_mask = input_ids != 0
@@ -705,7 +784,7 @@ def _test_concat(question_ids,
     del in_table_cell_index
     del in_paragraph_index
     return input_ids, attention_mask, paragraph_mask, paragraph_number_value, paragraph_index, \
-           table_mask, table_cell_number_value, table_index, tags, input_segments
+           table_mask, table_cell_number_value, table_index, tags, input_segments, span_pos_label
 
 
 """
@@ -754,7 +833,7 @@ class TagTaTQAReader(object):
     def _make_instance(self, input_ids, attention_mask, token_type_ids, paragraph_mask, table_mask,
                        paragraph_number_value, table_cell_number_value, paragraph_index, table_cell_index,
                        number_order_label, tags_ground_truth, operator_ground_truth, scale_ground_truth,
-                       paragraph_tokens, table_cell_tokens, answer_dict, question_id):
+                       paragraph_tokens, table_cell_tokens, answer_dict, question_id, span_pos_labels):
         return {
             "input_ids": np.array(input_ids),
             "attention_mask": np.array(attention_mask),
@@ -773,6 +852,7 @@ class TagTaTQAReader(object):
             "table_cell_tokens": table_cell_tokens,
             "answer_dict": answer_dict,
             "question_id": question_id,
+            "span_pos_labels": np.array(span_pos_labels),
         }
 
     def _to_instance(self, question: str, table: List[List[str]], paragraphs: List[Dict], answer_from: str,
@@ -786,7 +866,7 @@ class TagTaTQAReader(object):
             self.skip_count += 1
             return None
 
-        table_cell_tokens, table_ids, table_tags, table_cell_number_value, table_cell_index = \
+        table_cell_tokens, table_ids, table_tags, table_cell_number_value, table_cell_index, table_span_pos = \
             table_tokenize(table, self.tokenizer, answer_mapping, answer_type)
 
         for i in range(len(table)):
@@ -800,23 +880,24 @@ class TagTaTQAReader(object):
         table.rename(columns=column_relation, inplace=True)
 
         paragraph_tokens, paragraph_ids, paragraph_tags, paragraph_word_piece_mask, paragraph_number_mask, \
-        paragraph_number_value, paragraph_index = \
+        paragraph_number_value, paragraph_index, paragraph_span_pos = \
             paragraph_tokenize(question, paragraphs, self.tokenizer, answer_mapping, answer_type)
         question_ids = question_tokenizer(question_text, self.tokenizer)
         number_order_label = get_number_order_labels(paragraphs, table, derivation, operator_class,
                                                      answer_mapping, question_id, self.OPERATOR_CLASSES)
 
         input_ids, attention_mask, paragraph_mask, paragraph_number_value, paragraph_index, \
-        table_mask, table_number_value, table_index, tags, token_type_ids = \
+        table_mask, table_number_value, table_index, tags, token_type_ids, span_pos_label = \
             _concat(question_ids, table_ids, table_tags, table_cell_index, table_cell_number_value,
-                    paragraph_ids, paragraph_tags, paragraph_index, paragraph_number_value,
+                    paragraph_ids, paragraph_tags, paragraph_index, paragraph_number_value, table_span_pos,
+                    paragraph_span_pos,
                     self.sep_start, self.sep_end, self.question_length_limit,
                     self.passage_length_limit, self.max_pieces)
         answer_dict = {"answer_type": answer_type, "answer": answer, "scale": scale, "answer_from": answer_from}
         return self._make_instance(input_ids, attention_mask, token_type_ids, paragraph_mask, table_mask,
                                    paragraph_number_value, table_number_value, paragraph_index, table_index,
                                    number_order_label, tags, operator_class, scale_class,
-                                   paragraph_tokens, table_cell_tokens, answer_dict, question_id)
+                                   paragraph_tokens, table_cell_tokens, answer_dict, question_id, span_pos_label)
 
     def _read(self, file_path: str):
         print("Reading file at %s", file_path)
@@ -888,7 +969,7 @@ class TagTaTQATestReader(object):
     def _make_instance(self, input_ids, attention_mask, token_type_ids, paragraph_mask, table_mask,
                        paragraph_number_value, table_cell_number_value, paragraph_index, table_cell_index,
                        tags_ground_truth, paragraph_tokens, table_cell_tokens, answer_dict, question_id,
-                       paragraph_mapping_content, table_mapping_content):
+                       paragraph_mapping_content, table_mapping_content, span_pos_label):
         return {
             "input_ids": np.array(input_ids),
             "attention_mask": np.array(attention_mask),
@@ -906,6 +987,7 @@ class TagTaTQATestReader(object):
             "question_id": question_id,
             "paragraph_mapping_content": paragraph_mapping_content,
             "table_mapping_content": table_mapping_content,
+            "span_pos_label": span_pos_label,
         }
 
     def summerize_op(self, derivateion, answer_type, facts, answer, answer_mapping, scale):
@@ -959,18 +1041,19 @@ class TagTaTQATestReader(object):
         if gold_op is None:
             gold_op = "ignore"
 
-        table_cell_tokens, table_ids, table_tags, table_cell_number_value, table_cell_index, table_mapping_content = \
+        table_cell_tokens, table_ids, table_tags, table_cell_number_value, table_cell_index, table_mapping_content, table_span_pos = \
             table_test_tokenize(table, self.tokenizer, answer_mapping, answer_type)
 
         paragraph_tokens, paragraph_ids, paragraph_tags, paragraph_word_piece_mask, paragraph_number_mask, \
-        paragraph_number_value, paragraph_index, paragraph_mapping_content = \
+        paragraph_number_value, paragraph_index, paragraph_mapping_content, paragraph_span_pos = \
             paragraph_test_tokenize(question, paragraphs, self.tokenizer, answer_mapping, answer_type)
         question_ids = question_tokenizer(question_text, self.tokenizer)
 
         input_ids, attention_mask, paragraph_mask, paragraph_number_value, paragraph_index, \
-        table_mask, table_number_value, table_index, tags, token_type_ids = \
+        table_mask, table_number_value, table_index, tags, token_type_ids, span_pos_label = \
             _test_concat(question_ids, table_ids, table_tags, table_cell_index, table_cell_number_value,
                          paragraph_ids, paragraph_tags, paragraph_index, paragraph_number_value,
+                         table_span_pos, paragraph_span_pos,
                          self.sep_start, self.sep_end, self.question_length_limit,
                          self.passage_length_limit, self.max_pieces)
 
@@ -981,7 +1064,7 @@ class TagTaTQATestReader(object):
                                    paragraph_number_value, table_number_value, paragraph_index, table_index, tags,
                                    paragraph_tokens,
                                    table_cell_tokens, answer_dict, question_id, paragraph_mapping_content,
-                                   table_mapping_content)
+                                   table_mapping_content, span_pos_label)
 
     def _read(self, file_path: str):
         print("Reading file at %s", file_path)
