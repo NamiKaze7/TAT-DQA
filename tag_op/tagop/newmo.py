@@ -92,6 +92,8 @@ class MutiHeadModel(nn.Module):
                 table_mask: torch.LongTensor = None,
                 table_cell_index: torch.LongTensor = None,
                 table_cell_tokens: List[List[str]] = None,
+                paragraph_mapping_content=None,
+                table_mapping_content=None,
                 mode=None,
                 epoch=None, ) -> Dict[str, torch.Tensor]:
 
@@ -120,15 +122,16 @@ class MutiHeadModel(nn.Module):
         predict_head = torch.argmax(answer_head_log_probs, dim=-1).unsqueeze(-1)
 
         sequence_tag_head_loss = self.sequence_tag_head(token_representations[sequence_tag_head_index],
-                                                          table_mask[sequence_tag_head_index],
-                                                          paragraph_mask[sequence_tag_head_index],
-                                                          tag_labels[sequence_tag_head_index])
-        table_span_head_loss,  table_span = self.single_span_head(token_representations[table_span_head_index],
-                                                       table_mask[table_span_head_index],
-                                                       span_pos_labels[table_span_head_index])
-        paragraph_span_head_loss, paragraph_span = self.single_span_head(token_representations[paragraph_span_head_index],
-                                                           paragraph_mask[paragraph_span_head_index],
-                                                           span_pos_labels[paragraph_span_head_index])
+                                                        table_mask[sequence_tag_head_index],
+                                                        paragraph_mask[sequence_tag_head_index],
+                                                        tag_labels[sequence_tag_head_index])
+        table_span_head_loss, table_span = self.single_span_head(token_representations[table_span_head_index],
+                                                                 table_mask[table_span_head_index],
+                                                                 span_pos_labels[table_span_head_index])
+        paragraph_span_head_loss, paragraph_span = self.single_span_head(
+            token_representations[paragraph_span_head_index],
+            paragraph_mask[paragraph_span_head_index],
+            span_pos_labels[paragraph_span_head_index])
 
         head_loss = self.NLLLoss(answer_head_log_probs, operator_labels)
         loss = head_loss + paragraph_span_head_loss + table_span_head_loss + sequence_tag_head_loss
@@ -171,4 +174,3 @@ class MutiHeadModel(nn.Module):
         detail_em, detail_f1 = self._metrics.get_detail_metric()
         raw_detail = self._metrics.get_raw_pivot_table()
         return detail_em, detail_f1, raws, raw_detail
-
