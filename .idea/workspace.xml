@@ -34,26 +34,7 @@
       <change afterPath="$PROJECT_DIR$/../tag-tree/tag-tree" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../tag-tree/tag-tree.zip" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../tag-tree/新建文本文档.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/file_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/file_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/heads/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/heads/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/heads/sequence_span_head.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/heads/sequence_span_head.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/heads/single_span_head.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/heads/single_span_head.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/newmo.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/newmo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/newmo_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/newmo_util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/tools/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/tools/allennlp.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/tools/allennlp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/tools/decoding_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/tools/decoding_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/utils/dummy_flax_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/utils/dummy_flax_objects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/utils/dummy_pt_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/utils/dummy_pt_objects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/utils/dummy_sentencepiece_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/utils/dummy_sentencepiece_objects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/utils/dummy_tf_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/utils/dummy_tf_objects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/utils/dummy_tokenizers_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/utils/dummy_tokenizers_objects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/utils/hp_naming.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/utils/hp_naming.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/utils/logging.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/utils/logging.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/utils/notebook.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/utils/notebook.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/utils/sentencepiece_model_pb2.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/utils/sentencepiece_model_pb2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tag_op/train_newmo.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/train_newmo.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,7 +83,7 @@
       <workItem from="1616999128613" duration="13381000" />
       <workItem from="1617075643159" duration="13315000" />
       <workItem from="1617157895707" duration="3747000" />
-      <workItem from="1617166095099" duration="926000" />
+      <workItem from="1617166095099" duration="1645000" />
     </task>
     <servers />
   </component>

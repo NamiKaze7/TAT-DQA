@@ -2,16 +2,16 @@ import os
 import json
 import argparse
 from datetime import datetime
-from tag_op.tools.model import TagtreeFineTuningModel
+from tools.model import TagtreeFineTuningModel
 import tag_op.options
 from pprint import pprint
-from tag_op.data_builder.data_util import get_op_1, get_arithmetic_op_index_1, get_op_2, get_arithmetic_op_index_2
-from tag_op.data_builder.data_util import get_op_3, get_arithmetic_op_index_3
-from tag_op.data_builder.data_util import OPERATOR_CLASSES_
-from tag_op.tools.utils import create_logger, set_environment
-from tag_op.data_builder.tatqa_roberta_tagopnet_batch_gen import TaTQABatchGen, TaTQATestBatchGen
+from data_builder.data_util import get_op_1, get_arithmetic_op_index_1, get_op_2, get_arithmetic_op_index_2
+from data_builder.data_util import get_op_3, get_arithmetic_op_index_3
+from data_builder.data_util import OPERATOR_CLASSES_
+from tools.utils import create_logger, set_environment
+from data_builder.tatqa_roberta_tagopnet_batch_gen import TaTQABatchGen, TaTQATestBatchGen
 from transformers import RobertaModel, BertModel
-from tag_op.tagop.newmo import MutiHeadModel
+from tagop.newmo import MutiHeadModel
 import torch
 import numpy as np
 
