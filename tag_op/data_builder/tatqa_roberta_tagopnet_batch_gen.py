@@ -32,9 +32,10 @@ class TaTQABatchGen(object):
             paragraph_tokens = item["paragraph_tokens"]
             table_cell_tokens = item["table_cell_tokens"]
             question_id = item["question_id"]
+            span_pos_labels = item["span_pos_labels"]
             all_data.append((input_ids, attention_mask, token_type_ids, paragraph_mask, table_mask, paragraph_index,
                 table_cell_index, tag_labels, operator_labels, scale_labels, number_order_labels, gold_answers,
-                paragraph_tokens, table_cell_tokens, paragraph_numbers, table_cell_numbers, question_id))
+                paragraph_tokens, table_cell_tokens, paragraph_numbers, table_cell_numbers, question_id, span_pos_labels))
         print("Load data size {}.".format(len(all_data)))
         self.data = TaTQABatchGen.make_batches(all_data, args.batch_size if self.is_train else args.eval_batch_size,
                                               self.is_train)
@@ -70,7 +71,7 @@ class TaTQABatchGen(object):
             input_ids_batch, attention_mask_batch, token_type_ids_batch, paragraph_mask_batch, table_mask_batch, \
             paragraph_index_batch, table_cell_index_batch, tag_labels_batch, operator_labels_batch, scale_labels_batch, \
             number_order_labels_batch, gold_answers_batch, paragraph_tokens_batch,  \
-            table_cell_tokens_batch, paragraph_numbers_batch, table_cell_numbers_batch, question_ids_batch = zip(*batch)
+            table_cell_tokens_batch, paragraph_numbers_batch, table_cell_numbers_batch, question_ids_batch, span_pos_labels_batch = zip(*batch)
             bsz = len(batch)
             input_ids = torch.LongTensor(bsz, 512)
             attention_mask = torch.LongTensor(bsz, 512)
@@ -83,6 +84,7 @@ class TaTQABatchGen(object):
             operator_labels = torch.LongTensor(bsz)
             scale_labels = torch.LongTensor(bsz)
             number_order_labels = torch.LongTensor(bsz)
+            span_pos_labels = torch.LongTensor(bsz, 2)
             paragraph_tokens = []
             table_cell_tokens = []
             gold_answers = []
@@ -107,12 +109,13 @@ class TaTQABatchGen(object):
                 table_cell_numbers.append(table_cell_numbers_batch[i])
                 gold_answers.append(gold_answers_batch[i])
                 question_ids.append(question_ids_batch[i])
+                span_pos_labels = span_pos_labels_batch[i]
             out_batch = {"input_ids": input_ids, "attention_mask": attention_mask, "token_type_ids":token_type_ids,
                 "paragraph_mask": paragraph_mask, "paragraph_index": paragraph_index, "tag_labels": tag_labels,
                 "operator_labels": operator_labels, "scale_labels": scale_labels, "number_order_labels": number_order_labels,
                 "paragraph_tokens": paragraph_tokens, "table_cell_tokens": table_cell_tokens, "paragraph_numbers": paragraph_numbers,
                 "table_cell_numbers": table_cell_numbers, "gold_answers": gold_answers, "question_ids": question_ids,
-                "table_mask": table_mask, "table_cell_index":table_cell_index,
+                 "span_pos_labels": span_pos_labels, "table_mask": table_mask, "table_cell_index":table_cell_index,
             }
 
             if self.args.cuda:
@@ -148,11 +151,12 @@ class TaTQATestBatchGen(object):
             paragraph_tokens = item["paragraph_tokens"]
             table_cell_tokens = item["table_cell_tokens"]
             question_id = item["question_id"]
+            span_pos_labels = item["span_pos_labels"]
             paragraph_mapping_content = item["paragraph_mapping_content"]
             table_mapping_content = item["table_mapping_content"]
             all_data.append((input_ids, attention_mask, token_type_ids, paragraph_mask, table_mask, paragraph_index,
                              table_cell_index, tag_labels, gold_answers, paragraph_tokens, table_cell_tokens,
-                             paragraph_numbers, table_cell_numbers, question_id, paragraph_mapping_content,
+                             paragraph_numbers, table_cell_numbers, question_id, span_pos_labels, paragraph_mapping_content,
                              table_mapping_content))
         print("Load data size {}.".format(len(all_data)))
         self.data = TaTQATestBatchGen.make_batches(all_data, args.batch_size if self.is_train else args.eval_batch_size,
@@ -189,7 +193,7 @@ class TaTQATestBatchGen(object):
             input_ids_batch, attention_mask_batch, token_type_ids_batch, paragraph_mask_batch, table_mask_batch, \
             paragraph_index_batch, table_cell_index_batch, tag_labels_batch, gold_answers_batch, paragraph_tokens_batch, \
             table_cell_tokens_batch, paragraph_numbers_batch, table_cell_numbers_batch, question_ids_batch, \
-            paragraph_mapping_content, table_mapping_content = zip(*batch)
+            paragraph_mapping_content, table_mapping_content, span_pos_labels_batch = zip(*batch)
             bsz = len(batch)
             input_ids = torch.LongTensor(bsz, 512)
             attention_mask = torch.LongTensor(bsz, 512)
@@ -199,6 +203,7 @@ class TaTQATestBatchGen(object):
             paragraph_index = torch.LongTensor(bsz, 512)
             table_cell_index = torch.LongTensor(bsz, 512)
             tag_labels = torch.LongTensor(bsz, 512)
+            span_pos_labels = torch.LongTensor(bsz, 2)
             paragraph_tokens = []
             table_cell_tokens = []
             gold_answers = []
@@ -221,11 +226,13 @@ class TaTQATestBatchGen(object):
                 table_cell_numbers.append(table_cell_numbers_batch[i])
                 gold_answers.append(gold_answers_batch[i])
                 question_ids.append(question_ids_batch[i])
+                span_pos_labels[i] = span_pos_labels_batch[i]
             out_batch = {"input_ids": input_ids, "attention_mask": attention_mask, "token_type_ids": token_type_ids,
                          "paragraph_mask": paragraph_mask, "paragraph_index": paragraph_index, "tag_labels": tag_labels,
                          "paragraph_tokens": paragraph_tokens, "table_cell_tokens": table_cell_tokens,
                          "paragraph_numbers": paragraph_numbers,
                          "table_cell_numbers": table_cell_numbers, "gold_answers": gold_answers, "question_ids": question_ids,
+                         "span_pos_labels": span_pos_labels,
                          "table_mask": table_mask, "table_cell_index": table_cell_index,
                          "paragraph_mapping_content": paragraph_mapping_content,
                          "table_mapping_content": table_mapping_content,
