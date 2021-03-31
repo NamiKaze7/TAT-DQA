@@ -110,9 +110,9 @@ class MutiHeadModel(nn.Module):
         question_summary = self.summary_vector(token_representations, question_mask, 'question')
 
         operator_labels[operator_labels > 4] = 4
-        paragraph_span_head_index = operator_labels.squeeze() == 0
-        table_span_head_index = operator_labels.squeeze() == 1
-        sequence_tag_head_index = operator_labels.squeeze() > 1
+        paragraph_span_head_index = (operator_labels.squeeze() == 0).cpu().detach()
+        table_span_head_index = (operator_labels.squeeze() == 1).cpu().detach()
+        sequence_tag_head_index = (operator_labels.squeeze() > 1).cpu().detach()
 
         answer_head_logits = self.head_predictor(torch.cat([paragraph_summary,
                                                             table_summary, question_summary], dim=-1))
