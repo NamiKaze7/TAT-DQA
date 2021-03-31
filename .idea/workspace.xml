@@ -20,8 +20,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37c1d10a-f719-44a3-b5ad-58f81e15012f" name="默认更改列表" comment="">
+      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/tag-tree.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/new model.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/paper/A Multi-Type Multi-Span Network forReading Comprehension that Requires Discrete Reasoning.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/paper/A Simple and Effective Model for Answering Multi-span Questions.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/paper/BART Denoising Sequence-to-Sequence Pre-training for NaturalLanguage Generation, Translation, and Comprehension.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/paper/TAT-QA A Question Answering Benchmark on a Hybrid of Tabular and.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/tag-tree" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/tag-tree.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tag-tree/新建文本文档.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/newmo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/newmo.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/data_builder/tatqa_roberta_tagop_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/data_builder/tatqa_roberta_tagop_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tag_op/train_newmo.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/train_newmo.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,9 +53,10 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../tag-tree" />
   </component>
   <component name="ProjectId" id="1qQ5lvYKWWUb6lyeFiSoAVdCcTO" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -68,6 +86,7 @@
       <workItem from="1616999128613" duration="13381000" />
       <workItem from="1617075643159" duration="13315000" />
       <workItem from="1617157895707" duration="3747000" />
+      <workItem from="1617166095099" duration="618000" />
     </task>
     <servers />
   </component>
@@ -91,10 +110,10 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="755" y="302" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2048.1112@0.0.2048.1112" timestamp="1617000956588" />
-    <state x="805" y="311" key="FileChooserDialogImpl" timestamp="1616999267678">
+    <state x="805" y="311" key="FileChooserDialogImpl" timestamp="1617166398446">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="805" y="311" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1616999267678" />
+    <state x="805" y="311" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1617166398446" />
     <state x="688" y="249" width="672" height="678" key="search.everywhere.popup" timestamp="1617096041235">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/newmo.iml" filepath="$PROJECT_DIR$/.idea/newmo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tag-tree/.idea/tag-tree.iml" filepath="$PROJECT_DIR$/../tag-tree/.idea/tag-tree.iml" />
     </modules>
   </component>
 </project>

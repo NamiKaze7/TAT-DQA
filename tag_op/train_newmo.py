@@ -3,7 +3,7 @@ import json
 import argparse
 from datetime import datetime
 from tag_op.tools.model import TagtreeFineTuningModel
-import torch.nn as nn
+import options
 from pprint import pprint
 from tag_op.data_builder.data_util import get_op_1, get_arithmetic_op_index_1, get_op_2, get_arithmetic_op_index_2
 from tag_op.data_builder.data_util import get_op_3, get_arithmetic_op_index_3
