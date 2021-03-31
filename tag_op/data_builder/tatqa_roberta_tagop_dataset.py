@@ -987,7 +987,7 @@ class TagTaTQATestReader(object):
             "question_id": question_id,
             "paragraph_mapping_content": paragraph_mapping_content,
             "table_mapping_content": table_mapping_content,
-            "span_pos_label": span_pos_label,
+            "span_pos_labels": span_pos_label,
         }
 
     def summerize_op(self, derivateion, answer_type, facts, answer, answer_mapping, scale):
