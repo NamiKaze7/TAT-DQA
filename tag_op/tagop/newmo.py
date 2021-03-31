@@ -125,10 +125,10 @@ class MutiHeadModel(nn.Module):
                                                           tag_labels[sequence_tag_head_index])
         table_span_head_loss,  table_span = self.single_span_head(token_representations[table_span_head_index],
                                                        table_mask[table_span_head_index],
-                                                       span_pos_labels[table_span_head_index, :])
+                                                       span_pos_labels[table_span_head_index])
         paragraph_span_head_loss, paragraph_span = self.single_span_head(token_representations[paragraph_span_head_index],
                                                            paragraph_mask[paragraph_span_head_index],
-                                                           span_pos_labels[paragraph_span_head_index, :])
+                                                           span_pos_labels[paragraph_span_head_index])
 
         head_loss = self.NLLLoss(answer_head_log_probs, operator_labels)
         loss = head_loss + paragraph_span_head_loss + table_span_head_loss + sequence_tag_head_loss
