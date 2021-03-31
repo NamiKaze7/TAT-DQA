@@ -114,7 +114,7 @@ class TagtreeFineTuningModel():
         dev_data_list.reset()
         self.network.eval()
         with torch.no_grad():
-            for batch in dev_data_list:
+            for step, batch in dev_data_list:
                 output_dict = self.network(**batch)
                 loss = output_dict["loss"]
                 self.dev_loss.update(loss.item(), 1)
