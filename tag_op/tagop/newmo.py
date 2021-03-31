@@ -92,8 +92,6 @@ class MutiHeadModel(nn.Module):
                 table_mask: torch.LongTensor = None,
                 table_cell_index: torch.LongTensor = None,
                 table_cell_tokens: List[List[str]] = None,
-                paragraph_mapping_content=None,
-                table_mapping_content=None,
                 mode=None,
                 epoch=None, ) -> Dict[str, torch.Tensor]:
 
