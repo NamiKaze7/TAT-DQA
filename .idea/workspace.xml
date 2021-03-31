@@ -34,9 +34,7 @@
       <change afterPath="$PROJECT_DIR$/../tag-tree/tag-tree" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../tag-tree/tag-tree.zip" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../tag-tree/新建文本文档.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tag_op/data_builder/tatqa_roberta_tagopnet_batch_gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/data_builder/tatqa_roberta_tagopnet_batch_gen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +82,7 @@
       <workItem from="1616999128613" duration="13381000" />
       <workItem from="1617075643159" duration="13315000" />
       <workItem from="1617157895707" duration="3747000" />
-      <workItem from="1617166095099" duration="7566000" />
+      <workItem from="1617166095099" duration="7876000" />
     </task>
     <servers />
   </component>

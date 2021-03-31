@@ -32,7 +32,7 @@ class TaTQABatchGen(object):
             paragraph_tokens = item["paragraph_tokens"]
             table_cell_tokens = item["table_cell_tokens"]
             question_id = item["question_id"]
-            span_pos_labels = item["span_pos_labels"][0]
+            span_pos_labels = torch.from_numpy(item["span_pos_labels"][0])
             all_data.append((input_ids, attention_mask, token_type_ids, paragraph_mask, table_mask, paragraph_index,
                 table_cell_index, tag_labels, operator_labels, scale_labels, number_order_labels, gold_answers,
                 paragraph_tokens, table_cell_tokens, paragraph_numbers, table_cell_numbers, question_id, span_pos_labels))
@@ -151,7 +151,7 @@ class TaTQATestBatchGen(object):
             paragraph_tokens = item["paragraph_tokens"]
             table_cell_tokens = item["table_cell_tokens"]
             question_id = item["question_id"]
-            span_pos_labels = item["span_pos_labels"][0]
+            span_pos_labels = torch.from_numpy(item["span_pos_labels"])
             paragraph_mapping_content = item["paragraph_mapping_content"]
             table_mapping_content = item["table_mapping_content"]
             all_data.append((input_ids, attention_mask, token_type_ids, paragraph_mask, table_mask, paragraph_index,
