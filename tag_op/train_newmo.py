@@ -104,7 +104,7 @@ def main():
         for step, batch in enumerate(train_itr):
             model.update(batch)
             if model.step % (args.log_per_updates * args.gradient_accumulation_steps) == 0 or model.step == 1:
-                logger.info("Updates[{0:6}] train loss[{1:.5f}] head acc[{1:.5f}]remaining[{2}].\r\n".format(
+                logger.info("Updates[{0:6}] train loss[{1:.5f}] head acc[{2:.5f}]remaining[{3}].\r\n".format(
                     model.updates, model.train_loss.avg, model.head_acc.avg,
                     str((datetime.now() - train_start) / (step + 1) * (num_train_steps - step - 1)).split('.')[0]))
                 model.avg_reset()
@@ -112,7 +112,7 @@ def main():
         model.reset()
         model.avg_reset()
         model.evaluate(dev_itr)
-        logger.info("Evaluate epoch:[{0:6}] eval loss[{1:.5f}] head acc[{1:.5f}].\r\n".format(epoch, model.dev_loss.avg,
+        logger.info("Evaluate epoch:[{0:6}] eval loss[{1:.5f}] head acc[{2:.5f}].\r\n".format(epoch, model.dev_loss.avg,
                                                                                               model.head_acc.avg))
         model.avg_reset()
 

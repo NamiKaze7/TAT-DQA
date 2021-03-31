@@ -21,9 +21,10 @@ class SingleSpanHead(nn.Module):
         # Info about the best span prediction
         start_logits = replace_masked_values(start_logits, mask, -1e7)
         end_logits = replace_masked_values(end_logits, mask, -1e7)
-
+        best_span = None
         # Shape: (batch_size, 2)
-        best_span = get_best_span(start_logits, end_logits)
+        if input_vec.shape[0] != 0:
+            best_span = get_best_span(start_logits, end_logits)
         if torch.LongTensor([-1, -1]) in label.cpu().detach():
             label_fit_index = label[:, 0] != - 1
             label = label[label_fit_index]
