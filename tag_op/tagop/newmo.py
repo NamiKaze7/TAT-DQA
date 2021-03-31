@@ -27,7 +27,7 @@ class MutiHeadModel(nn.Module):
                  ablation_mode: int = None,
                  ):
         super(MutiHeadModel, self).__init__()
-        self.pretrained_model = bert
+        self.tapas = bert
         self.config = config
         self.operator_classes = operator_classes
         self.scale_classes = scale_classes
@@ -96,7 +96,7 @@ class MutiHeadModel(nn.Module):
                 epoch=None, ) -> Dict[str, torch.Tensor]:
 
         output_dict = {}
-        token_representations = self.pretrained_model(
+        token_representations = self.tapas(
             input_ids,
             attention_mask=attention_mask,
             token_type_ids=token_type_ids,
