@@ -3,7 +3,7 @@ import json
 import argparse
 from datetime import datetime
 from tag_op.tools.model import TagtreeFineTuningModel
-import options
+import tag_op.options
 from pprint import pprint
 from tag_op.data_builder.data_util import get_op_1, get_arithmetic_op_index_1, get_op_2, get_arithmetic_op_index_2
 from tag_op.data_builder.data_util import get_op_3, get_arithmetic_op_index_3
@@ -11,7 +11,7 @@ from tag_op.data_builder.data_util import OPERATOR_CLASSES_
 from tag_op.tools.utils import create_logger, set_environment
 from tag_op.data_builder.tatqa_roberta_tagopnet_batch_gen import TaTQABatchGen, TaTQATestBatchGen
 from transformers import RobertaModel, BertModel
-from tag_op.tag_op.newmo import MutiHeadModel
+from tag_op.tagop.newmo import MutiHeadModel
 import torch
 import numpy as np
 
@@ -23,7 +23,7 @@ parser.add_argument("--encoder", type=str, default='roberta')
 parser.add_argument("--op_mode", type=int, default=0)
 parser.add_argument("--finbert_model", type=str, default='dataset_tagop/finbert')
 parser.add_argument("--ablation_mode", type=int, default=0)
-parser.add_argument("--test_data_dir", type=str, default="tag_op/data/roberta")
+parser.add_argument("--test_data_dir", type=str, default="tagop/data/roberta")
 
 args = parser.parse_args()
 if args.ablation_mode != 0:

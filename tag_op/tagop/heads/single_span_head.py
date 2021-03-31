@@ -1,6 +1,6 @@
 import torch.nn as nn
 import torch
-from tag_op.tag_op.tools.allennlp import replace_masked_values, masked_log_softmax
+from tag_op.tagop.tools.allennlp import replace_masked_values, masked_log_softmax
 
 
 class SingleSpanHead(nn.Module):
