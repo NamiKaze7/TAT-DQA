@@ -20,20 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37c1d10a-f719-44a3-b5ad-58f81e15012f" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tag_op/tag_op/heads/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tag_op/tag_op/heads/sequence_span_head.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tag_op/tag_op/heads/single_span_head.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/newmo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/newmo.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tag_op/data_builder/tatqa_roberta_tagop_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/data_builder/tatqa_roberta_tagop_dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/data_builder/tatqa_tagopnet_batch_gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/data_builder/tatqa_tagopnet_batch_gen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/head.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/newmo.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tag_op/newmo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/newmo_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tag_op/newmo_util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tag_op/single_span_head.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tools/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tools/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/train_newmo.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/train_newmo.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +66,8 @@
       <option name="presentableId" value="Default" />
       <updated>1616999127410</updated>
       <workItem from="1616999128613" duration="13381000" />
-      <workItem from="1617075643159" duration="13114000" />
+      <workItem from="1617075643159" duration="13315000" />
+      <workItem from="1617157895707" duration="2992000" />
     </task>
     <servers />
   </component>

@@ -669,13 +669,13 @@ def _concat(question_ids,
         else:
             span_pos_label[0, :] = torch.from_numpy(np.array(table_span_pos) + question_length)
     elif paragraph_span_pos:
-        if paragraph_span_pos[0] >= (passage_length_limitation - table_length):
+        if paragraph_span_pos[0] >= paragraph_length:
             span_pos_label[0, :] = torch.from_numpy(np.array([-1, -1]))
-        elif paragraph_span_pos[1] >= (passage_length_limitation - table_length):
-            paragraph_span_pos[1] = (passage_length_limitation - table_length) - 1
-            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length)
+        elif paragraph_span_pos[1] >= paragraph_length:
+            paragraph_span_pos[1] = paragraph_length - 1
+            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length + table_length + 1)
         else:
-            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length)
+            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length + table_length + 1)
     else:
         span_pos_label[0, :] = torch.from_numpy(np.array([-1, -1]))
 
@@ -686,10 +686,10 @@ def _concat(question_ids,
     table_index[0, question_length:question_length + table_length] = \
         torch.from_numpy(np.array(in_table_cell_index[:table_length]))
     tags[0, question_length:question_length + table_length] = torch.from_numpy(np.array(table_tags[:table_length]))
-    paragraph_mask[0, question_length + table_length:question_length + table_length + paragraph_length] = 1
-    paragraph_index[0, question_length + table_length:question_length + table_length + paragraph_length] = \
+    paragraph_mask[0, question_length + table_length + 1:question_length + table_length + paragraph_length + 1] = 1
+    paragraph_index[0, question_length + table_length + 1:question_length + table_length + paragraph_length + 1] = \
         torch.from_numpy(np.array(in_paragraph_index[:paragraph_length]))
-    tags[0, question_length + table_length:question_length + table_length + paragraph_length] = \
+    tags[0, question_length + table_length + 1:question_length + table_length + 1 + paragraph_length] = \
         torch.from_numpy(np.array(paragraph_tags[:paragraph_length]))
     del in_table_cell_index
     del in_paragraph_index
@@ -759,13 +759,13 @@ def _test_concat(question_ids,
         else:
             span_pos_label[0, :] = torch.from_numpy(np.array(table_span_pos) + question_length)
     elif paragraph_span_pos:
-        if paragraph_span_pos[0] >= (passage_length_limitation - table_length):
+        if paragraph_span_pos[0] >= paragraph_length:
             span_pos_label[0, :] = torch.from_numpy(np.array([-1, -1]))
-        elif paragraph_span_pos[1] >= (passage_length_limitation - table_length):
-            paragraph_span_pos[1] = (passage_length_limitation - table_length) - 1
-            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length)
+        elif paragraph_span_pos[1] >= paragraph_length:
+            paragraph_span_pos[1] = paragraph_length - 1
+            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length + table_length + 1)
         else:
-            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length)
+            span_pos_label[0, :] = torch.from_numpy(np.array(paragraph_span_pos) + question_length + table_length + 1)
     else:
         span_pos_label[0, :] = torch.from_numpy(np.array([-1, -1]))
 
@@ -776,10 +776,10 @@ def _test_concat(question_ids,
     table_index[0, question_length:question_length + table_length] = \
         torch.from_numpy(np.array(in_table_cell_index[:table_length]))
     tags[0, question_length:question_length + table_length] = torch.from_numpy(np.array(table_tags[:table_length]))
-    paragraph_mask[0, question_length + table_length:question_length + table_length + paragraph_length] = 1
-    paragraph_index[0, question_length + table_length:question_length + table_length + paragraph_length] = \
+    paragraph_mask[0, question_length + table_length + 1:question_length + table_length + 1 + paragraph_length] = 1
+    paragraph_index[0, question_length + table_length + 1:question_length + table_length + 1 + paragraph_length] = \
         torch.from_numpy(np.array(in_paragraph_index[:paragraph_length]))
-    tags[0, question_length + table_length:question_length + table_length + paragraph_length] = \
+    tags[0, question_length + table_length + 1:question_length + table_length + 1 + paragraph_length] = \
         torch.from_numpy(np.array(paragraph_tags[:paragraph_length]))
     del in_table_cell_index
     del in_paragraph_index
