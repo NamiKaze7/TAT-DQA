@@ -24,7 +24,7 @@ class SingleSpanHead(nn.Module):
 
         # Shape: (batch_size, 2)
         best_span = get_best_span(start_logits, end_logits)
-        if torch.LongTensor([-1, -1]) in label:
+        if torch.LongTensor([-1, -1]) in label.cpu().detach():
             label_fit_index = label[:, 0] != - 1
             label = label[label_fit_index]
             start_log_probs = start_log_probs[label_fit_index]
