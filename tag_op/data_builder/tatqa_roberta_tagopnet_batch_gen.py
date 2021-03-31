@@ -193,7 +193,7 @@ class TaTQATestBatchGen(object):
             input_ids_batch, attention_mask_batch, token_type_ids_batch, paragraph_mask_batch, table_mask_batch, \
             paragraph_index_batch, table_cell_index_batch, tag_labels_batch, gold_answers_batch, paragraph_tokens_batch, \
             table_cell_tokens_batch, paragraph_numbers_batch, table_cell_numbers_batch, question_ids_batch, \
-            paragraph_mapping_content, table_mapping_content, span_pos_labels_batch = zip(*batch)
+            span_pos_labels_batch, paragraph_mapping_content, table_mapping_content = zip(*batch)
             bsz = len(batch)
             input_ids = torch.LongTensor(bsz, 512)
             attention_mask = torch.LongTensor(bsz, 512)
