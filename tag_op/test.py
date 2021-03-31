@@ -7,7 +7,8 @@ idex = 0
 
 for item in data:
     print(item["span_pos_labels"][0])
+    print(item["input_ids"])
     print('----------------------------')
     idex += 1
-    if idex > 9:
+    if idex > 2:
         break
