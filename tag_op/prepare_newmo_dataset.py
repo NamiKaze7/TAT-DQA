@@ -26,16 +26,24 @@ elif args.encoder == 'finbert':
     tokenizer = BertTokenizer.from_pretrained(args.input_path + "/finbert")
     sep = '[SEP]'
 
-data_reader = TagTaTQAReader(tokenizer, args.passage_length_limit, args.question_length_limit, sep=sep)
 
-data_format = "tatqa_dataset_dev.json"
+if args.mode == 'test':
+    data_reader = TagTaTQATestReader(tokenizer, args.passage_length_limit, args.question_length_limit, sep=sep)
+    data_mode = ["test"]
+else:
+    data_reader = TagTaTQAReader(tokenizer, args.passage_length_limit, args.question_length_limit, sep=sep)
+    data_mode = ["train", "dev"]
 
-dpath = os.path.join(args.input_path, data_format)
-data = data_reader._read(dpath)
-print(data_reader.skip_count)
-data_reader.skip_count = 0
-print("Save data to {}.".format(os.path.join(args.output_dir, f"tagop_{args.encoder}_cached_train.pkl")))
-if not os.path.exists(args.output_dir):
-    os.makedirs(args.output_dir)
-with open(os.path.join(args.output_dir, f"tagop_{args.encoder}_cached_train.pkl"), "wb") as f:
-    pickle.dump(data, f)
+data_format = "tatqa_dataset_{}.json"
+print(f'==== NOTE ====: encoder:{args.encoder}, mode:{args.mode}')
+
+for dm in data_mode:
+    dpath = os.path.join(args.input_path, data_format.format(dm))
+    data = data_reader._read(dpath)
+    print(data_reader.skip_count)
+    data_reader.skip_count = 0
+    print("Save data to {}.".format(os.path.join(args.output_dir, f"tagop_{args.encoder}_cached_{dm}.pkl")))
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir)
+    with open(os.path.join(args.output_dir, f"tagop_{args.encoder}_cached_{dm}.pkl"), "wb") as f:
+        pickle.dump(data, f)
