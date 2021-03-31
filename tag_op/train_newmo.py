@@ -102,6 +102,7 @@ def main():
         first = False
         logger.info('At epoch {}'.format(epoch))
         for step, batch in enumerate(train_itr):
+            logger.info("input shape:{} span pos shape:{}".format(batch["input_ids"].shape, batch["span_pos_labels"].shape))
             model.update(batch)
             if model.step % (args.log_per_updates * args.gradient_accumulation_steps) == 0 or model.step == 1:
                 logger.info("Updates[{0:6}] train loss[{1:.5f}] head acc[{1:.5f}]remaining[{2}].\r\n".format(
