@@ -7,6 +7,6 @@ idex = 0
 
 for item in data:
     if item["operator_label"] <= 1:
-       if item["span_pos_labels"][0] == -1:
+       if item["span_pos_labels"][0][0] == -1:
            print(item["answer_dict"])
 
