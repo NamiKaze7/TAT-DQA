@@ -367,7 +367,7 @@ def paragraph_tokenize(question, paragraphs, tokenizer, mapping, answer_type):
         input()
     current_token_index = 1
     is_begin_flag = True
-    begin_pos, end_pos = 0
+    begin_pos, end_pos = 0, 0
     for i, token in enumerate(tokens):
         if i != 0:
             sub_tokens = tokenizer._tokenize(" " + token)
@@ -477,7 +477,7 @@ def paragraph_test_tokenize(question, paragraphs, tokenizer, mapping, answer_typ
         input()
     current_token_index = 1
     is_begin_flag = True
-    begin_pos, end_pos = 0
+    begin_pos, end_pos = 0, 0
     for i, token in enumerate(tokens):
         if i != 0:
             sub_tokens = tokenizer._tokenize(" " + token)
