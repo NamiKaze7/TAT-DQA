@@ -3,7 +3,7 @@ import json
 import argparse
 from datetime import datetime
 from tools.model import TagtreeFineTuningModel
-import tag_op.options
+import options
 from pprint import pprint
 from data_builder.data_util import get_op_1, get_arithmetic_op_index_1, get_op_2, get_arithmetic_op_index_2
 from data_builder.data_util import get_op_3, get_arithmetic_op_index_3
