@@ -20,22 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37c1d10a-f719-44a3-b5ad-58f81e15012f" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/tag-tree.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/new model.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/paper/A Multi-Type Multi-Span Network forReading Comprehension that Requires Discrete Reasoning.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/paper/A Simple and Effective Model for Answering Multi-span Questions.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/paper/BART Denoising Sequence-to-Sequence Pre-training for NaturalLanguage Generation, Translation, and Comprehension.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/paper/TAT-QA A Question Answering Benchmark on a Hybrid of Tabular and.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/tag-tree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/tag-tree.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tag-tree/新建文本文档.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/newmo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/newmo.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag_op/tagop/newmo.py" beforeDir="false" afterPath="$PROJECT_DIR$/tag_op/tagop/newmo.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +51,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tag-tree" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../git/tag-tree" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
@@ -84,7 +72,9 @@
       <workItem from="1616999128613" duration="13381000" />
       <workItem from="1617075643159" duration="13315000" />
       <workItem from="1617157895707" duration="3747000" />
-      <workItem from="1617166095099" duration="17342000" />
+      <workItem from="1617166095099" duration="18535000" />
+      <workItem from="1617198385884" duration="2002000" />
+      <workItem from="1617248774447" duration="332000" />
     </task>
     <servers />
   </component>
@@ -108,10 +98,10 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="755" y="302" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2048.1112@0.0.2048.1112" timestamp="1617179420301" />
-    <state x="805" y="311" key="FileChooserDialogImpl" timestamp="1617166398446">
+    <state x="805" y="311" key="FileChooserDialogImpl" timestamp="1617249104094">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="805" y="311" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1617166398446" />
+    <state x="805" y="311" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1617249104094" />
     <state x="533" y="200" key="SettingsEditor" timestamp="1617178052595">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
