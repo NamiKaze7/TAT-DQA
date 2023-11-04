@@ -1,6 +1,7 @@
 
 Tag-tree Model
 ====================
+[paper](https://arxiv.org/abs/2207.11871) 	ACM MM 2022
 
 ## Requirements
 
